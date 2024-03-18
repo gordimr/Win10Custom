@@ -49,3 +49,4 @@ if ($null -eq $ultimateScheme) {
 	# Apply Ultimate Performance
 }
 powercfg /S $powerSchemeGuid
+powercfg -change -monitor-timeout-ac 0
