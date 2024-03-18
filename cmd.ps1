@@ -10,6 +10,9 @@ Start-Sleep 1
 reg add "HKCU\Control Panel\Desktop" /v "UserPreferencesMask" /t REG_BINARY /d 900712078091000000 /f
 Start-Sleep 1
 
+# Control Panel > Ease of Access Center > Make the computer easier to see > Turn off all unnecessary animations (when possible)
+reg add "HKCU\Control Panel\Desktop\WindowMetrics" /v "MinAnimate" /t REG_SZ /d 0 /f
+
 # Settings > Devices > Mouse > Additional Mouse Options > Pointer Options > Disable Enhance pointer precision
 reg add "HKCU\Control Panel\Mouse" /v "MouseSpeed" /t REG_SZ /d 0 /f
 Start-Sleep 1
@@ -17,6 +20,3 @@ reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold2" /t REG_SZ /d 0 /f
 Start-Sleep 1
 reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold1" /t REG_SZ /d 0 /f
 Start-Sleep 1
-
-# Control Panel > Ease of Access Center > Make the computer easier to see > Turn off all unnecessary animations (when possible)
-reg add "HKCU\Control Panel\Desktop\WindowMetrics" /v "MinAnimate" /t REG_SZ /d 0 /f
