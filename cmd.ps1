@@ -27,20 +27,18 @@ New-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\S
 
 # Ultimate Perofrmance
 # Define the name and GUID of the power scheme
-	$powerSchemeName = "Ultimate Performance"
-	$powerSchemeGuid = "e9a42b02-d5df-448d-aa00-03f14749eb61"
-	
-	# Get all power schemes
-	$schemes = powercfg /list | Out-String -Stream
-	
-	# Check if the power scheme already exists
-	$ultimateScheme = $schemes | Where-Object { $_ -match $powerSchemeName }
-	if ($null -eq $ultimateScheme) {
+$powerSchemeName = "Ultimate Performance"
+$powerSchemeGuid = "e9a42b02-d5df-448d-aa00-03f14749eb61"
+# Get all power schemes
+$schemes = powercfg /list | Out-String -Stream
+# Check if the power scheme already exists
+$ultimateScheme = $schemes | Where-Object { $_ -match $powerSchemeName }
+if ($null -eq $ultimateScheme) {
 	Write-Host "Power scheme '$powerSchemeName' not found. Adding..."
-
 	# Download Ultimate Perofrmance Plan to %TEMP%
 	powershell -command "Invoke-WebRequest -Uri 'https://github.com/gordimr/Win10Custom/raw/main/Ultimate%20Performance.pow' -OutFile '$env:temp\Ultimate Performance.pow'"
 	# Import Ultimate Performance
 	powercfg -import "$env:temp\Ultimate Performance.pow" e9a42b02-d5df-448d-aa00-03f14749eb61
 	# Apply Ultimate Performance
 	powercfg /S $powerSchemeGuid
+}
