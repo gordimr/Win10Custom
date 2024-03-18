@@ -2,28 +2,34 @@
 # Settings > Personalization > Colors > Disable Transparency effects
 if((Test-Path -LiteralPath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize") -ne $true) {  New-Item "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'EnableTransparency' -Value 0 -PropertyType DWord -Force -ea SilentlyContinue;
+Write-Host "Settings > Personalization > Colors > Disable Transparency effects"
 
 # Settings > Personalization > Start > Don't show recently opened items in Jump Lists on Start or the taskbar and in File Explorer Quick Access
 if((Test-Path -LiteralPath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced") -ne $true) {  New-Item "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'Start_TrackDocs' -Value 0 -PropertyType DWord -Force -ea SilentlyContinue;
+Write-Host "Settings > Personalization > Start > Don't show recently opened items in Jump Lists on Start or the taskbar and in File Explorer Quick Access"
 
 # Control Panel > Ease of Access Center > Make the computer easier to see > Remove background images (when available)
 if((Test-Path -LiteralPath "HKCU:\Control Panel\Desktop") -ne $true) {  New-Item "HKCU:\Control Panel\Desktop" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\Control Panel\Desktop' -Name 'UserPreferencesMask' -Value ([byte[]](0x90,0x12,0x03,0x80,0x91,0x00,0x00,0x00)) -PropertyType Binary -Force -ea SilentlyContinue;
+Write-Host "Control Panel > Ease of Access Center > Make the computer easier to see > Remove background images (when available)"
 
 # Control Panel > Ease of Access Center > Make the computer easier to see > Turn off all unnecessary animations (when possible)
 if((Test-Path -LiteralPath "HKCU:\Control Panel\Desktop\WindowMetrics") -ne $true) {  New-Item "HKCU:\Control Panel\Desktop\WindowMetrics" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\Control Panel\Desktop\WindowMetrics' -Name 'MinAnimate' -Value '0' -PropertyType String -Force -ea SilentlyContinue;
+Write-Host "Control Panel > Ease of Access Center > Make the computer easier to see > Turn off all unnecessary animations (when possible)"
 
 # Settings > Devices > Mouse > Additional Mouse Options > Pointer Options > Disable Enhance pointer precision
 if((Test-Path -LiteralPath "HKCU:\Control Panel\Mouse") -ne $true) {  New-Item "HKCU:\Control Panel\Mouse" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\Control Panel\Mouse' -Name 'MouseSpeed' -Value '0' -PropertyType String -Force -ea SilentlyContinue;
 New-ItemProperty -LiteralPath 'HKCU:\Control Panel\Mouse' -Name 'MouseThreshold1' -Value '0' -PropertyType String -Force -ea SilentlyContinue;
 New-ItemProperty -LiteralPath 'HKCU:\Control Panel\Mouse' -Name 'MouseThreshold2' -Value '0' -PropertyType String -Force -ea SilentlyContinue;
+Write-Host "Settings > Devices > Mouse > Additional Mouse Options > Pointer Options > Disable Enhance pointer precision"
 
 # Disable Bing Search
 if((Test-Path -LiteralPath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search") -ne $true) {  New-Item "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled' -Value 0 -PropertyType DWord -Force -ea SilentlyContinue;
+Write-Host "Disable Bing Search"
 
 # Ultimate Perofrmance
 # Define the name and GUID of the power scheme
@@ -42,3 +48,4 @@ if ($null -eq $ultimateScheme) {
 	# Apply Ultimate Performance
 }
 powercfg /S $powerSchemeGuid
+Write-Host "Ultimate Perofrmance Power Plan"
