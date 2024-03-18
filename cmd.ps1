@@ -24,3 +24,8 @@ New-ItemProperty -LiteralPath 'HKCU:\Control Panel\Mouse' -Name 'MouseThreshold2
 # Disable Bing Search
 if((Test-Path -LiteralPath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search") -ne $true) {  New-Item "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled' -Value 0 -PropertyType DWord -Force -ea SilentlyContinue;
+
+# Download Ultimate Perofrmance Plan to %TEMP%
+powershell -command "Invoke-WebRequest -Uri 'https://github.com/gordimr/Win10Custom/raw/main/Ultimate%20Performance.pow' -OutFile '$env:temp\Ultimate Performance.pow'"
+# Apply Ultimate Performance
+powercfg -import "$env:temp\Ultimate Performance.pow" e9a42b02-d5df-448d-aa00-03f14749eb61
