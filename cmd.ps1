@@ -25,7 +25,7 @@ Write-Host "Bing Search > Off" -ForegroundColor green -BackgroundColor black
 if((Test-Path -LiteralPath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search") -ne $true) {  New-Item "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled' -Value 0 -PropertyType DWord -Force -ea SilentlyContinue;
 
-Write-Host "Ultimate Perofrmance Power Plan > On" -ForegroundColor green -BackgroundColor black
+Write-Host "Control Panel > Power Options > Ultimate Perofrmance > On" -ForegroundColor green -BackgroundColor black
 $powerSchemeName = "Ultimate Performance"
 $powerSchemeGuid = "e9a42b02-d5df-448d-aa00-03f14749eb61"
 $schemes = powercfg /list | Out-String -Stream
