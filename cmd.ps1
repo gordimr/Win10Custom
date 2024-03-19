@@ -94,4 +94,4 @@ if ($PCPassword) {
 	New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon' -Value '1' -PropertyType String -Force -ea SilentlyContinue;
 }
 
-Write-Host "Keep PowerShell Open Untill Language Pack for Hebrew is finished" -ForegroundColor green -BackgroundColor black
+Write-Host "Keep PowerShell Open Untill Language Pack For Hebrew Is Finished" -ForegroundColor green -BackgroundColor black
