@@ -60,7 +60,8 @@ $Shell = New-Item -Path $AllFolders.PSPath -Name 'Shell' -Force
 New-ItemProperty -Path $Shell.PSPath -Name 'FolderType' -Value 'NotSpecified' -PropertyType String -Force
 
 Write-Host "Settings > Time & language > Language > Hebrew" -ForegroundColor green -BackgroundColor black
-Install-Language he-IL
+$UserLanguageList.Add("he-IL")
+Set-WinUserLanguageList -LanguageList $UserLanguageList
 Write-Host "Settings > Time & language > Region >  Country or region > Israel" -ForegroundColor green -BackgroundColor black
 Set-Culture -CultureInfo he-IL
 Write-Host "Settings > Time & language > Region >  Regional format > Hebrew (Israel)" -ForegroundColor green -BackgroundColor black
