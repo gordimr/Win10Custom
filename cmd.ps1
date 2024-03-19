@@ -55,7 +55,9 @@ New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersio
 Write-Host "Folder Properties > Customize > Optimize all folders > General items" -ForegroundColor green -BackgroundColor black
 $BasePath = 'HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell'
 Remove-Item -Path "$BasePath\Bags" -Recurse -Force
+if ( Test-Path -Path "$BasePath\BagMRU" ) {
 Remove-Item -Path "$BasePath\BagMRU" -Recurse -Force
+}
 $Bags = New-Item -Path $BasePath -Name 'Bags' -Force
 $AllFolders = New-Item -Path $Bags.PSPath -Name 'AllFolders' -Force
 $Shell = New-Item -Path $AllFolders.PSPath -Name 'Shell' -Force
