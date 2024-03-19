@@ -47,6 +47,9 @@ Write-Host "PC Name Changed To $env:username" -ForegroundColor green -Background
 Rename-Computer -NewName $env:username
 }
 
+Write-Host "Computer Management > System Tools > Local Users and Groups > Users > $env:username > Password never expires > On" -ForegroundColor green -BackgroundColor black
+Set-LocalUser -Name "$env:username" -PasswordNeverExpires 1
+
 if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon") -ne $true) {  New-Item "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" -force -ea SilentlyContinue };
 
 Write-Host "$env:username Added to HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon as DefaultUsername" -ForegroundColor green -BackgroundColor black
@@ -87,7 +90,4 @@ if ($PCPassword) {
 
 	Write-Host "Enabled AutoAdminLogon on HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" -ForegroundColor green -BackgroundColor black
 	New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon' -Value '1' -PropertyType String -Force -ea SilentlyContinue;
-
-	Write-Host "Computer Management > System Tools > Local Users and Groups > Users > $env:username > Password never expires > On" -ForegroundColor green -BackgroundColor black
-	Set-LocalUser -Name "$env:username" -PasswordNeverExpires 1
 }
