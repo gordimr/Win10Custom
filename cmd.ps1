@@ -73,7 +73,7 @@ $UserLanguageList = New-WinUserLanguageList -Language "en-US"
 $UserLanguageList.Add("he-IL")
 Set-WinUserLanguageList -LanguageList $UserLanguageList -Force
 Write-Host "Settings > Time & language > Language > Hebrew (BasicTyping, TextToSpeech)" -ForegroundColor green -BackgroundColor black
-Install-Language -Language he-IL -AsJob
+Install-Language -Language he-IL
 Write-Host "Settings > Time & language > Region >  Country or region > Israel" -ForegroundColor green -BackgroundColor black
 Set-Culture -CultureInfo he-IL
 Write-Host "Settings > Time & language > Region >  Regional format > Hebrew (Israel)" -ForegroundColor green -BackgroundColor black
