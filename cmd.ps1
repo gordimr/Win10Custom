@@ -1,4 +1,7 @@
 # Registry to PowerShell converter - https://reg2ps.azurewebsites.net/
+Write-Host "Settings > Date & time > Time zone > Jerusalem" -ForegroundColor green -BackgroundColor black
+Set-TimeZone -Id "Israel Standard Time" -PassThru
+
 Write-Host "Settings > Personalization > Colors > Transparency effects > Off" -ForegroundColor green -BackgroundColor black
 if((Test-Path -LiteralPath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize") -ne $true) {  New-Item "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'EnableTransparency' -Value 0 -PropertyType DWord -Force -ea SilentlyContinue;
@@ -47,7 +50,7 @@ if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\W
 Write-Host "$env:username Added to HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon as DefaultUsername" -ForegroundColor green -BackgroundColor black
 New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultUsername' -Value $env:username -PropertyType String -Force -ea SilentlyContinue;
 
-Write-Host "Optional: Add PC Password" -ForegroundColor green -BackgroundColor black
+Write-Host "(Optional) Add PC Password" -ForegroundColor green -BackgroundColor black
 $PCPassword = read-host -Prompt "Enter PC Password (Leave Blank to Skip)"
 if ($PCPassword) {
 	Write-Host "PC Password Changed To $PCPassword" -ForegroundColor green -BackgroundColor black
