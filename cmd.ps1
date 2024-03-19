@@ -74,12 +74,12 @@ $UserLanguageList.Add("he-IL")
 Set-WinUserLanguageList -LanguageList $UserLanguageList -Force
 Write-Host "Settings > Time & language > Language > Hebrew (BasicTyping, TextToSpeech)" -ForegroundColor green -BackgroundColor black
 Install-Language -Language he-IL -AsJob
-Write-Host "Settings > Time & language > Region >  Country or region > Israel" -ForegroundColor green -BackgroundColor black
-Set-Culture -CultureInfo he-IL
 Write-Host "Settings > Time & language > Region >  Regional format > Hebrew (Israel)" -ForegroundColor green -BackgroundColor black
-Set-WinSystemLocale -SystemLocale he-IL
+Set-Culture -CultureInfo he-IL
 Write-Host "Settings > Date & time > Time zone > Jerusalem" -ForegroundColor green -BackgroundColor black
 Set-TimeZone -Id "Israel Standard Time"
+Write-Host "Settings > Time & language > Region > Country or region > Israel" -ForegroundColor green -BackgroundColor black
+Set-WinHomeLocation -GeoId 117
 
 Write-Host "(Optional) Add PC Password" -ForegroundColor green -BackgroundColor black
 $PCPassword = read-host -Prompt "Enter PC Password (Leave Blank To Skip)"
