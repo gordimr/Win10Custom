@@ -26,44 +26,36 @@ if((Test-Path -LiteralPath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Sear
 New-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled' -Value 0 -PropertyType DWord -Force -ea SilentlyContinue;
 
 Write-Host "Ultimate Perofrmance Power Plan > On" -ForegroundColor green -BackgroundColor black
-Write-Host "Define the name and GUID of the power scheme" -ForegroundColor green -BackgroundColor black
 $powerSchemeName = "Ultimate Performance"
 $powerSchemeGuid = "e9a42b02-d5df-448d-aa00-03f14749eb61"
-Write-Host "Getting all power schemes" -ForegroundColor green -BackgroundColor black
 $schemes = powercfg /list | Out-String -Stream
-Write-Host "Checking if the power scheme already exists" -ForegroundColor green -BackgroundColor black
 $ultimateScheme = $schemes | Where-Object { $_ -match $powerSchemeName }
 if ($null -eq $ultimateScheme) {
-	Write-Host "Power scheme '$powerSchemeName' not found. Adding..."
-	Write-Host "Downloading Ultimate Perofrmance Plan to $env:temp" -ForegroundColor green -BackgroundColor black
-	powershell -command "Invoke-WebRequest -Uri 'https://github.com/gordimr/Win10Custom/raw/main/Ultimate%20Performance.pow' -OutFile '$env:temp\Ultimate Performance.pow'"
-	Write-Host "Importing Ultimate Performance" -ForegroundColor green -BackgroundColor black
-	powercfg -import "$env:temp\Ultimate Performance.pow" e9a42b02-d5df-448d-aa00-03f14749eb61
+	Invoke-WebRequest -Uri 'https://github.com/gordimr/Win10Custom/raw/main/Ultimate%20Performance.pow' -OutFile '$env:temp\Ultimate Performance.pow'
+	powercfg -import "$env:temp\Ultimate Performance.pow" $powerSchemeGuid
 }
-Write-Host "Applying Ultimate Performance" -ForegroundColor green -BackgroundColor black
 powercfg /S $powerSchemeGuid
-Write-Host "Screen never turn off" -ForegroundColor green -BackgroundColor black
+
+Write-Host "Settings > Power & Sleep > Screen > When plugged in, turn off after > Never" -ForegroundColor green -BackgroundColor black
 powercfg -change -monitor-timeout-ac 0
 
-Write-Host "Changing PC Name to $env:username" -ForegroundColor green -BackgroundColor black
+Write-Host "PC Name Changed To $env:username" -ForegroundColor green -BackgroundColor black
 Rename-Computer -NewName $env:username
 
 if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon") -ne $true) {  New-Item "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" -force -ea SilentlyContinue };
 
-Write-Host "Using $env:username as Username on Winlogon" -ForegroundColor green -BackgroundColor black
+Write-Host "$env:username Added to HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon as DefaultUsername" -ForegroundColor green -BackgroundColor black
 New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultUsername' -Value $env:username -PropertyType String -Force -ea SilentlyContinue;
 
-Write-Host "Password don't expire" -ForegroundColor green -BackgroundColor black
-Set-LocalUser -Name "$env:username" -PasswordNeverExpires 1
-
-Write-Host "Enable AutoAdminLogon" -ForegroundColor green -BackgroundColor black
+Write-Host "Enabled AutoAdminLogon on HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" -ForegroundColor green -BackgroundColor black
 New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon' -Value '1' -PropertyType String -Force -ea SilentlyContinue;
 
-Write-Host "Adding Password to PC" -ForegroundColor green -BackgroundColor black
-$PCPassword = read-host -Prompt "Password"
+Write-Host "Computer Management > System Tools > Local Users and Groups > Users > $env:username > Password never expires > On" -ForegroundColor green -BackgroundColor black
+Set-LocalUser -Name "$env:username" -PasswordNeverExpires 1
 
-Write-Host "Using $PCPassword as Password on PC" -ForegroundColor green -BackgroundColor black
+$PCPassword = read-host -Prompt "Password"
+Write-Host "PC Password Changed To $PCPassword" -ForegroundColor green -BackgroundColor black
 Set-LocalUser -Name $env:username -Password (ConvertTo-SecureString -AsPlainText $PCPassword -Force)
 
-Write-Host "Using $PCPassword as Password on Winlogon" -ForegroundColor green -BackgroundColor black
+Write-Host "$PCPassword Added to HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon as DefaultPassword" -ForegroundColor green -BackgroundColor black
 New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultPassword' -Value $PCPassword -PropertyType String -Force -ea SilentlyContinue;
