@@ -47,6 +47,7 @@ if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\W
 Write-Host "$env:username Added to HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon as DefaultUsername" -ForegroundColor green -BackgroundColor black
 New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultUsername' -Value $env:username -PropertyType String -Force -ea SilentlyContinue;
 
+Write-Host "Optional: Add PC Password" -ForegroundColor green -BackgroundColor black
 $PCPassword = read-host -Prompt "Enter PC Password"
 Write-Host "PC Password Changed To $PCPassword" -ForegroundColor green -BackgroundColor black
 Set-LocalUser -Name $env:username -Password (ConvertTo-SecureString -AsPlainText $PCPassword -Force)
