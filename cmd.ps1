@@ -42,8 +42,10 @@ powercfg -change -monitor-timeout-ac 0
 Write-Host "Indexing Service Disabled" -ForegroundColor green -BackgroundColor black
 Get-Service WSearch | Stop-Service | Set-Service -StartupType Disabled
 
+if ($env:computername -ne $env:username) {
 Write-Host "PC Name Changed To $env:username" -ForegroundColor green -BackgroundColor black
 Rename-Computer -NewName $env:username
+}
 
 if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon") -ne $true) {  New-Item "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" -force -ea SilentlyContinue };
 
