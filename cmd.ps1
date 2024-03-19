@@ -1,4 +1,6 @@
 # Registry to PowerShell converter - https://reg2ps.azurewebsites.net/
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
+
 Write-Host "Settings > Personalization > Colors > Transparency effects > Off" -ForegroundColor green -BackgroundColor black
 if((Test-Path -LiteralPath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize") -ne $true) {  New-Item "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'EnableTransparency' -Value 0 -PropertyType DWord -Force -ea SilentlyContinue;
