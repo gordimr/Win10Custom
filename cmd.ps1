@@ -39,6 +39,9 @@ powercfg /S $powerSchemeGuid
 Write-Host "Settings > Power & Sleep > Screen > When plugged in, turn off after > Never" -ForegroundColor green -BackgroundColor black
 powercfg -change -monitor-timeout-ac 0
 
+Write-Host "Indexing Service Disabled" -ForegroundColor green -BackgroundColor black
+Get-Service WSearch | Stop-Service | Set-Service -StartupType Disabled
+
 Write-Host "PC Name Changed To $env:username" -ForegroundColor green -BackgroundColor black
 Rename-Computer -NewName $env:username
 
@@ -46,6 +49,15 @@ if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\W
 
 Write-Host "$env:username Added to HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon as DefaultUsername" -ForegroundColor green -BackgroundColor black
 New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultUsername' -Value $env:username -PropertyType String -Force -ea SilentlyContinue;
+
+Write-Host "Folder Properties > Customize > Optimize all folders > General items" -ForegroundColor green -BackgroundColor black
+$BasePath = 'HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell'
+Remove-Item -Path "$BasePath\Bags" -Recurse -Force
+Remove-Item -Path "$BasePath\BagMRU" -Recurse -Force
+$Bags = New-Item -Path $BasePath -Name 'Bags' -Force
+$AllFolders = New-Item -Path $Bags.PSPath -Name 'AllFolders' -Force
+$Shell = New-Item -Path $AllFolders.PSPath -Name 'Shell' -Force
+New-ItemProperty -Path $Shell.PSPath -Name 'FolderType' -Value 'NotSpecified' -PropertyType String -Force
 
 Write-Host "Settings > Time & language > Language > Hebrew" -ForegroundColor green -BackgroundColor black
 Install-Language he-IL
@@ -57,7 +69,7 @@ Write-Host "Settings > Date & time > Time zone > Jerusalem" -ForegroundColor gre
 Set-TimeZone -Id "Israel Standard Time"
 
 Write-Host "(Optional) Add PC Password" -ForegroundColor green -BackgroundColor black
-$PCPassword = read-host -Prompt "Enter PC Password (Leave Blank to Skip)"
+$PCPassword = read-host -Prompt "Enter PC Password (Leave Blank To Skip)"
 if ($PCPassword) {
 	Write-Host "PC Password Changed To $PCPassword" -ForegroundColor green -BackgroundColor black
 	Set-LocalUser -Name $env:username -Password (ConvertTo-SecureString -AsPlainText $PCPassword -Force)
