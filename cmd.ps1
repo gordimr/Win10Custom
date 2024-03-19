@@ -1,31 +1,31 @@
 # Registry to PowerShell converter - https://reg2ps.azurewebsites.net/
-Write-Host "Settings > Personalization > Colors > Disable Transparency effects" -ForegroundColor green -BackgroundColor black
+Write-Host "Settings > Personalization > Colors > Transparency effects > Off" -ForegroundColor green -BackgroundColor black
 if((Test-Path -LiteralPath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize") -ne $true) {  New-Item "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'EnableTransparency' -Value 0 -PropertyType DWord -Force -ea SilentlyContinue;
 
-Write-Host "Settings > Personalization > Start > Don't show recently opened items in Jump Lists on Start or the taskbar and in File Explorer Quick Access" -ForegroundColor green -BackgroundColor black
+Write-Host "Settings > Personalization > Start > Show recently opened items in Jump Lists on Start or the taskbar and in File Explorer Quick Access > Off" -ForegroundColor green -BackgroundColor black
 if((Test-Path -LiteralPath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced") -ne $true) {  New-Item "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'Start_TrackDocs' -Value 0 -PropertyType DWord -Force -ea SilentlyContinue;
 
-Write-Host "Control Panel > Ease of Access Center > Make the computer easier to see > Remove background images (when available)" -ForegroundColor green -BackgroundColor black
+Write-Host "Control Panel > Ease of Access Center > Make the computer easier to see > Remove background images (when available) > On" -ForegroundColor green -BackgroundColor black
 if((Test-Path -LiteralPath "HKCU:\Control Panel\Desktop") -ne $true) {  New-Item "HKCU:\Control Panel\Desktop" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\Control Panel\Desktop' -Name 'UserPreferencesMask' -Value ([byte[]](0x90,0x12,0x03,0x80,0x91,0x00,0x00,0x00)) -PropertyType Binary -Force -ea SilentlyContinue;
 
-Write-Host "Control Panel > Ease of Access Center > Make the computer easier to see > Turn off all unnecessary animations (when possible)" -ForegroundColor green -BackgroundColor black
+Write-Host "Control Panel > Ease of Access Center > Make the computer easier to see > Turn off all unnecessary animations (when possible) > On" -ForegroundColor green -BackgroundColor black
 if((Test-Path -LiteralPath "HKCU:\Control Panel\Desktop\WindowMetrics") -ne $true) {  New-Item "HKCU:\Control Panel\Desktop\WindowMetrics" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\Control Panel\Desktop\WindowMetrics' -Name 'MinAnimate' -Value '0' -PropertyType String -Force -ea SilentlyContinue;
 
-Write-Host "Settings > Devices > Mouse > Additional Mouse Options > Pointer Options > Disable Enhance pointer precision" -ForegroundColor green -BackgroundColor black
+Write-Host "Settings > Devices > Mouse > Additional Mouse Options > Pointer Options > Enhance pointer precision > Off" -ForegroundColor green -BackgroundColor black
 if((Test-Path -LiteralPath "HKCU:\Control Panel\Mouse") -ne $true) {  New-Item "HKCU:\Control Panel\Mouse" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\Control Panel\Mouse' -Name 'MouseSpeed' -Value '0' -PropertyType String -Force -ea SilentlyContinue;
 New-ItemProperty -LiteralPath 'HKCU:\Control Panel\Mouse' -Name 'MouseThreshold1' -Value '0' -PropertyType String -Force -ea SilentlyContinue;
 New-ItemProperty -LiteralPath 'HKCU:\Control Panel\Mouse' -Name 'MouseThreshold2' -Value '0' -PropertyType String -Force -ea SilentlyContinue;
 
-Write-Host "Disable Bing Search" -ForegroundColor green -BackgroundColor black
+Write-Host "Bing Search > Off" -ForegroundColor green -BackgroundColor black
 if((Test-Path -LiteralPath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search") -ne $true) {  New-Item "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled' -Value 0 -PropertyType DWord -Force -ea SilentlyContinue;
 
-Write-Host "Ultimate Perofrmance Power Plan" -ForegroundColor green -BackgroundColor black
+Write-Host "Ultimate Perofrmance Power Plan > On" -ForegroundColor green -BackgroundColor black
 Write-Host "Define the name and GUID of the power scheme" -ForegroundColor green -BackgroundColor black
 $powerSchemeName = "Ultimate Performance"
 $powerSchemeGuid = "e9a42b02-d5df-448d-aa00-03f14749eb61"
