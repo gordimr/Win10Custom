@@ -1,7 +1,4 @@
 # Registry to PowerShell converter - https://reg2ps.azurewebsites.net/
-Write-Host "Settings > Date & time > Time zone > Jerusalem" -ForegroundColor green -BackgroundColor black
-Set-TimeZone -Id "Israel Standard Time" -PassThru
-
 Write-Host "Settings > Personalization > Colors > Transparency effects > Off" -ForegroundColor green -BackgroundColor black
 if((Test-Path -LiteralPath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize") -ne $true) {  New-Item "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'EnableTransparency' -Value 0 -PropertyType DWord -Force -ea SilentlyContinue;
@@ -49,6 +46,15 @@ if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\W
 
 Write-Host "$env:username Added to HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon as DefaultUsername" -ForegroundColor green -BackgroundColor black
 New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultUsername' -Value $env:username -PropertyType String -Force -ea SilentlyContinue;
+
+Write-Host "Settings > Time & language > Language > Hebrew" -ForegroundColor green -BackgroundColor black
+Install-Language he-IL
+Write-Host "Settings > Time & language > Region >  Country or region > Israel" -ForegroundColor green -BackgroundColor black
+Set-Culture -CultureInfo he-IL
+Write-Host "Settings > Time & language > Region >  Regional format > Hebrew (Israel)" -ForegroundColor green -BackgroundColor black
+Set-WinSystemLocale -SystemLocale he-IL
+Write-Host "Settings > Date & time > Time zone > Jerusalem" -ForegroundColor green -BackgroundColor black
+Set-TimeZone -Id "Israel Standard Time"
 
 Write-Host "(Optional) Add PC Password" -ForegroundColor green -BackgroundColor black
 $PCPassword = read-host -Prompt "Enter PC Password (Leave Blank to Skip)"
