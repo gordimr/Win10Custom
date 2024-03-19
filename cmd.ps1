@@ -48,15 +48,17 @@ Write-Host "$env:username Added to HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVe
 New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultUsername' -Value $env:username -PropertyType String -Force -ea SilentlyContinue;
 
 Write-Host "Optional: Add PC Password" -ForegroundColor green -BackgroundColor black
-$PCPassword = read-host -Prompt "Enter PC Password"
-Write-Host "PC Password Changed To $PCPassword" -ForegroundColor green -BackgroundColor black
-Set-LocalUser -Name $env:username -Password (ConvertTo-SecureString -AsPlainText $PCPassword -Force)
+$PCPassword = read-host -Prompt "Enter PC Password (Leave Blank to Skip)"
+if ($PCPassword) {
+	Write-Host "PC Password Changed To $PCPassword" -ForegroundColor green -BackgroundColor black
+	Set-LocalUser -Name $env:username -Password (ConvertTo-SecureString -AsPlainText $PCPassword -Force)
 
-Write-Host "$PCPassword Added to HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon as DefaultPassword" -ForegroundColor green -BackgroundColor black
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultPassword' -Value $PCPassword -PropertyType String -Force -ea SilentlyContinue;
+	Write-Host "$PCPassword Added to HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon as DefaultPassword" -ForegroundColor green -BackgroundColor black
+	New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultPassword' -Value $PCPassword -PropertyType String -Force -ea SilentlyContinue;
 
-Write-Host "Enabled AutoAdminLogon on HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" -ForegroundColor green -BackgroundColor black
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon' -Value '1' -PropertyType String -Force -ea SilentlyContinue;
+	Write-Host "Enabled AutoAdminLogon on HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" -ForegroundColor green -BackgroundColor black
+	New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon' -Value '1' -PropertyType String -Force -ea SilentlyContinue;
 
-Write-Host "Computer Management > System Tools > Local Users and Groups > Users > $env:username > Password never expires > On" -ForegroundColor green -BackgroundColor black
-Set-LocalUser -Name "$env:username" -PasswordNeverExpires 1
+	Write-Host "Computer Management > System Tools > Local Users and Groups > Users > $env:username > Password never expires > On" -ForegroundColor green -BackgroundColor black
+	Set-LocalUser -Name "$env:username" -PasswordNeverExpires 1
+}
