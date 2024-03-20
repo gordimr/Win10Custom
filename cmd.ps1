@@ -1,4 +1,8 @@
 # Registry to PowerShell converter - https://reg2ps.azurewebsites.net/
+Write-Host "Adobe Acrobat > Edit > Prefrences > Security (Enhanced) > Protected View > All Files" -ForegroundColor green -BackgroundColor black
+if((Test-Path -LiteralPath "HKCU:\SOFTWARE\Adobe\Adobe Acrobat\DC\TrustManager") -ne $true) {  New-Item "HKCU:\SOFTWARE\Adobe\Adobe Acrobat\DC\TrustManager" -force -ea SilentlyContinue };
+New-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Adobe\Adobe Acrobat\DC\TrustManager' -Name 'iProtectedView' -Value 2 -PropertyType DWord -Force -ea SilentlyContinue;
+
 Write-Host "Settings > Personalization > Colors > Transparency effects > Off" -ForegroundColor green -BackgroundColor black
 if((Test-Path -LiteralPath "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize") -ne $true) {  New-Item "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -force -ea SilentlyContinue };
 New-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'EnableTransparency' -Value 0 -PropertyType DWord -Force -ea SilentlyContinue;
