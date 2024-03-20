@@ -1,4 +1,5 @@
 Write-Host "Arkenfox" -ForegroundColor green -BackgroundColor black
+Stop-Process -Name firefox
 $CurrentFireFoxProfilePath = Get-Location
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/gordimr/FFoverrides/main/overrides.js -OutFile $CurrentFireFoxProfilePath\user-overrides.js
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/arkenfox/user.js/master/updater.bat -OutFile $CurrentFireFoxProfilePath\updater.bat
