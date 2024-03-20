@@ -41,3 +41,4 @@ else{
 	$task3 = New-ScheduledTask -Action $action3 -Trigger $trigger3
 	Register-ScheduledTask $taskName3 -InputObject $task3
 }
+Start-ScheduledTask -TaskName $taskName1
